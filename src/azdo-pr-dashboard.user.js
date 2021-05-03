@@ -119,6 +119,9 @@
 
     eus.onUrl(/\/(_git)/gi, (session, urlMatch) => {
       doEditAction(session);
+      if (atNI){
+        addGotoExportButton(session);
+      }
     });
 
     // Throttle page update events to avoid using up CPU when AzDO is adding a lot of elements during a short time (like on page load).
@@ -152,6 +155,28 @@
       const branchUrl = $('.pr-header-branches a:first-child').attr('href');
       const url = `${branchUrl}&path=${path.innerText}&_a=diff&azdouserscriptaction=edit`;
       $('<a style="margin: 0px 1em;" class="flex-end bolt-button bolt-link-button enabled bolt-focus-treatment" data-focuszone="" data-is-focusable="true" target="_blank" role="link" onclick="window.open(this.href,\'popup\',\'width=600,height=600\'); return false;">Edit</a>').attr('href', url).appendTo(end);
+    });
+  }
+  
+  function openp4fs(){
+    
+    window.open("https://p4.natinst.com/fsm/perforce/build/exports/ni/", '_blank');
+  }
+  
+  async function addGotoExportButton(session){
+    session.onEveryNew(document, '.bolt-menu.bolt-list.body-m.relative.scroll-hidden', async table => {
+      const exportMenu = $('<tr aria-posinset="6" aria-setsize="4" class="bolt-menuitem-row bolt-list-row bolt-menuitem-row-normal cursor-pointer" data-focuszone="focuszone-115" id="__bolt-gotoExport" role="menuitem" tabindex="-1"><td class="bolt-menuitem-cell bolt-list-cell"><div class="bolt-menuitem-cell-content flex-row"></div></td><td class="bolt-menuitem-cell bolt-list-cell"></td><td class="bolt-menuitem-cell bolt-list-cell"><div class="bolt-menuitem-cell-content bolt-menuitem-cell-icon flex-row"><span aria-hidden="true" class="flex-noshrink fabric-icon ms-Icon--FabricFolder"></span></div></td><td class="bolt-menuitem-cell bolt-list-cell"><div id="__bolt-gotoExport-text" class="bolt-menuitem-cell-content bolt-menuitem-cell-text flex-row"><div class="text-ellipsis">Export</div></div></td><td class="bolt-menuitem-cell bolt-list-cell"></td><td class="bolt-menuitem-cell bolt-list-cell"></td><td class="bolt-menuitem-cell bolt-list-cell"><div class="bolt-menuitem-cell-content flex-row"></div></td></tr>');
+      if (document.getElementById('__bolt-tree-sub-menu'))
+      {
+        if (document.getElementById('__bolt-upload-files'))
+        {
+          if (!document.getElementById("__bolt-gotoExport"))
+          {
+            $('#__bolt-download').after(exportMenu);
+            document.getElementById("__bolt-gotoExport").addEventListener("click", openp4fs);
+          }
+        }
+      }
     });
   }
 
