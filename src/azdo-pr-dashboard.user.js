@@ -159,8 +159,11 @@
   }
   
   function openp4fs(){
-    
-    window.open("https://p4.natinst.com/fsm/perforce/build/exports/ni/", '_blank');
+    var activeComponent = document.getElementsByClassName('focused');
+    //Totally not hacked way of getting the component name:
+    var componentName = activeComponent[0].childNodes[1].childNodes[0].childNodes[1].childNodes[1].childNodes[0].data;
+    var componentDir = componentName.slice(0,4);
+    window.open(`https://p4.natinst.com/fsm/perforce/build/exports/ni/${componentDir}/${componentName}/official/export/.latest/.latest/`, '_blank');
   }
   
   async function addGotoExportButton(session){
