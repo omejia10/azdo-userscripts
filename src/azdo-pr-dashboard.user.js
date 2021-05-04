@@ -120,7 +120,7 @@
     eus.onUrl(/\/(_git)/gi, (session, urlMatch) => {
       doEditAction(session);
       if (atNI){
-        addGotoExportButton(session);
+        addGotoLatestExportButton(session);
       }
     });
 
@@ -166,17 +166,17 @@
     window.open(`https://p4.natinst.com/fsm/perforce/build/exports/ni/${componentDir}/${componentName}/official/export/.latest/.latest/`, '_blank');
   }
   
-  async function addGotoExportButton(session){
+  async function addGotoLatestExportButton(session){
     session.onEveryNew(document, '.bolt-menu.bolt-list.body-m.relative.scroll-hidden', async table => {
-      const exportMenu = $('<tr aria-posinset="6" aria-setsize="4" class="bolt-menuitem-row bolt-list-row bolt-menuitem-row-normal cursor-pointer" data-focuszone="focuszone-115" id="__bolt-gotoExport" role="menuitem" tabindex="-1"><td class="bolt-menuitem-cell bolt-list-cell"><div class="bolt-menuitem-cell-content flex-row"></div></td><td class="bolt-menuitem-cell bolt-list-cell"></td><td class="bolt-menuitem-cell bolt-list-cell"><div class="bolt-menuitem-cell-content bolt-menuitem-cell-icon flex-row"><span aria-hidden="true" class="flex-noshrink fabric-icon ms-Icon--FabricFolder"></span></div></td><td class="bolt-menuitem-cell bolt-list-cell"><div id="__bolt-gotoExport-text" class="bolt-menuitem-cell-content bolt-menuitem-cell-text flex-row"><div class="text-ellipsis">Export</div></div></td><td class="bolt-menuitem-cell bolt-list-cell"></td><td class="bolt-menuitem-cell bolt-list-cell"></td><td class="bolt-menuitem-cell bolt-list-cell"><div class="bolt-menuitem-cell-content flex-row"></div></td></tr>');
+      const exportMenu = $('<tr aria-posinset="6" aria-setsize="4" class="bolt-menuitem-row bolt-list-row bolt-menuitem-row-normal cursor-pointer" data-focuszone="focuszone-115" id="__bolt-gotoLatestExport" role="menuitem" tabindex="-1"><td class="bolt-menuitem-cell bolt-list-cell"><div class="bolt-menuitem-cell-content flex-row"></div></td><td class="bolt-menuitem-cell bolt-list-cell"></td><td class="bolt-menuitem-cell bolt-list-cell"><div class="bolt-menuitem-cell-content bolt-menuitem-cell-icon flex-row"><span aria-hidden="true" class="flex-noshrink fabric-icon ms-Icon--FabricFolder"></span></div></td><td class="bolt-menuitem-cell bolt-list-cell"><div id="__bolt-gotoLatestExport-text" class="bolt-menuitem-cell-content bolt-menuitem-cell-text flex-row"><div class="text-ellipsis">Latest Export</div></div></td><td class="bolt-menuitem-cell bolt-list-cell"></td><td class="bolt-menuitem-cell bolt-list-cell"></td><td class="bolt-menuitem-cell bolt-list-cell"><div class="bolt-menuitem-cell-content flex-row"></div></td></tr>');
       if (document.getElementById('__bolt-tree-sub-menu'))
       {
         if (document.getElementById('__bolt-upload-files'))
         {
-          if (!document.getElementById("__bolt-gotoExport"))
+          if (!document.getElementById("__bolt-gotoLatestExport"))
           {
             $('#__bolt-download').after(exportMenu);
-            document.getElementById("__bolt-gotoExport").addEventListener("click", openp4fs);
+            document.getElementById("__bolt-gotoLatestExport").addEventListener("click", openp4fs);
           }
         }
       }
